@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Table</title>
+</head>
+<body>
+    <h2>Creating Table From Dummyjson.com</h2>
+    <div id="user-data"></div>
+    <script>
+        const url = "https://dummyjson.com/recipes";
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const recipes = data.recipes;
+                let table = `<table border="1">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Recipe Name</th>
+                                    <th>Image</th>
+                                    <th>Rating</th>
+                                    <th>Price</th>
+                                </tr>`;
+                recipes.forEach(recipe => {
+                    table += `<tr>
+                                <td>${recipe.id}</td>
+                                <td>${recipe.name}</td>
+                                <td><img src="${recipe.image}" alt="Recipe Image" width="100"></td>
+                                <td>${recipe.rating}</td>
+                                <td>${recipe.price || '1200'}</td>
+                              </tr>`;
+                });
+                table += </table>;
+                document.getElementById('user-data').innerHTML = table;
+            })
+            .catch(err => {
+                document.getElementById('user-data').textContent = "Error fetching data.";
+            })
+            .finally(() => {
+                console.log("fetching done");
+            });
+    </script>
+</body>
+</html>
